@@ -1,8 +1,17 @@
 const mongoose = require('mongoose');
-// import {MongoDbURL} from './config.js'
-// const mongoURL = 'mongodb://localhost:27017/aniDB';
-mongoose.connect('mongodb+srv://anandadmin:admin@storeuserdata.obcfc.mongodb.net/');
 
+// MongoDB connection URI
+const mongoURL = 'mongodb+srv://anandadmin:admin@storeuserdata.obcfc.mongodb.net/<databaseName>?retryWrites=true&w=majority';
+
+// Establish connection to MongoDB
+mongoose.connect(mongoURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => console.log("Database connection established"))
+    .catch((err) => console.error("Database connection error: ", err));
+
+// Access the connection instance
 const db = mongoose.connection;
 
 // Event for when the database is successfully connected
@@ -17,7 +26,7 @@ db.on('disconnected', () => {
 
 // Event for handling errors
 db.on('error', (err) => {
-    console.log("An error occurred: ", err);
+    console.error("An error occurred: ", err);
 });
 
 module.exports = db;
