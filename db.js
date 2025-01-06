@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // import {MongoDbURL} from './config.js'
 // const mongoURL = 'mongodb://localhost:27017/aniDB';
-mongoose.connect('mongodb://localhost:27017/bookstore');
+mongoose.connect('mongodb+srv://anandadmin:admin@storeuserdata.obcfc.mongodb.net/');
 
 const db = mongoose.connection;
 
