@@ -1,27 +1,44 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const db=require('./db');
- // Assuming this connects to the database (MongoDB, MySQL, etc.)
- const authRoutes=require('./routes/AuthRouts')
-//  const booksRoutes = require('./routes/booksRoutes');
-//  const productRoutes = require('./routes/productRout');
-const AuthUpdateUser =require('./routes/AuthUserUpadte')
-const BooksApi =require('./routes/BooksApiRouts')
+const db = require('./db'); // Assuming this connects to the database
+const authRoutes = require('./routes/AuthRouts');
+const AuthUpdateUser = require('./routes/AuthUserUpadte');
+const BooksApi = require('./routes/BooksApiRouts');
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Middleware for parsing JSON and handling CORS
+// Middleware
 app.use(bodyParser.json());
-// Routes setup with appropriate prefixes
-app.use(cors())
-// app.use('/books', booksRoutes);
+app.use(cors());
+
+// Routes
 app.use('/', authRoutes);
-// app.use('/products', productRoutes);
-app.use('/update',AuthUpdateUser)
-app.use('/search',BooksApi)
-app.use('/book',BooksApi)
-app.use('/want-to-read',BooksApi)
+app.use('/update', AuthUpdateUser);
+app.use('/search', BooksApi);
+app.use('/book', BooksApi);
+app.use('/want-to-read', BooksApi);
 
+// Handle undefined routes
+app.use((req, res, next) => {
+    res.status(404).json({ error: 'Endpoint not found' });
+});
 
-// Home route
-app.listen(5000)
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
+});
+
+// Start server after database connection
+db.once('open', () => {
+    console.log('Connected to the database');
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+});
+
+db.on('error', (err) => {
+    console.error('Database connection error:', err);
+});
