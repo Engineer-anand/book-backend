@@ -6,8 +6,6 @@ const mongoURL = 'mongodb+srv://anandadmin:admin@storeuserdata.obcfc.mongodb.net
 
 // Establish connection to MongoDB
 mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     ssl: true,
 })
     .then(() => console.log("Database connection established"))
