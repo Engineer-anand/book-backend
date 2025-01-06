@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 // MongoDB connection URI
 const mongoURL = 'mongodb+srv://anandadmin:admin@storeuserdata.obcfc.mongodb.net/<databaseName>?retryWrites=true&w=majority';
 
+
 // Establish connection to MongoDB
 mongoose.connect(mongoURL, {
     useNewUrlParser: true,
