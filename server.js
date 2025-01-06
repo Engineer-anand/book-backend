@@ -7,7 +7,7 @@ const AuthUpdateUser = require('./routes/AuthUserUpadte');
 const BooksApi = require('./routes/BooksApiRouts');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT =  3000;
 
 // Middleware
 app.use(bodyParser.json());
